@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EcoLeey | Admin Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="../css/admin.css" />
+</head>
+<body>
+
+<div id="loader"><div class="loader-icon"></div><div class="loader-text">LOADING ECOLEEY ADMIN PANEL...</div></div>
+
+<div class="dash-layout">
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ══════════════════ SIDEBAR ══════════════════ -->
+  <aside class="sidebar" id="sidebar">
+    <a href="../index.html" class="sidebar-brand">
+      <div class="sidebar-logo"><i class="fa-solid fa-recycle"></i></div>
+      <div><span class="sidebar-brand-name">Eco<em>Leey</em></span><div class="admin-tag">ADMIN PANEL</div></div>
+    </a>
+
+    <div class="sidebar-user">
+      <div class="sidebar-avatar" id="sidebarAvatar">--</div>
+      <div><div class="sidebar-user-name" id="sidebarUserName">Loading...</div><div class="sidebar-user-role" id="sidebarUserRole"></div></div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-group-label">Main</div>
+      <a class="nav-link" data-section="overview"><i class="fa-solid fa-grid-2"></i> Dashboard Overview</a>
+      <a class="nav-link" data-section="users"><i class="fa-solid fa-users"></i> User Management</a>
+      <a class="nav-link" data-section="deposits"><i class="fa-solid fa-recycle"></i> Recycling Deposits</a>
+      <a class="nav-link" data-section="withdrawals"><i class="fa-solid fa-money-bill-transfer"></i> Withdrawal Requests</a>
+      <a class="nav-link" data-section="wallet"><i class="fa-solid fa-wallet"></i> Wallet Management</a>
+
+      <div class="nav-group-label">Operations</div>
+      <a class="nav-link" data-section="rvm"><i class="fa-solid fa-box-archive"></i> RVM Management</a>
+      <a class="nav-link" data-section="leaderboard"><i class="fa-solid fa-ranking-star"></i> Leaderboard</a>
+      <a class="nav-link" data-section="analytics"><i class="fa-solid fa-chart-line"></i> Analytics</a>
+      <a class="nav-link" data-section="content"><i class="fa-solid fa-book-open"></i> Educational Content</a>
+
+      <div class="nav-group-label">Account</div>
+      <a class="nav-link" data-section="notifications"><i class="fa-solid fa-bell"></i> Notifications <span class="nav-badge" id="navNotifBadge">4</span></a>
+      <a class="nav-link" data-section="settings"><i class="fa-solid fa-gear"></i> Settings</a>
+      <a class="nav-link" data-section="profile"><i class="fa-solid fa-user-shield"></i> Admin Profile</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="logout-btn" data-logout-trigger><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+    </div>
+  </aside>
+
+  <!-- ══════════════════ MAIN ══════════════════ -->
+  <div class="dash-main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+        <div class="page-title-block"><div class="pt-title" id="ptTitle">Dashboard Overview</div><div class="pt-sub" id="ptSub">Platform performance at a glance</div></div>
+      </div>
+      <div class="topbar-search"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="topbarSearchInput" placeholder="Search users, deposits..." /></div>
+      <div class="topbar-right">
+        <button class="icon-btn" onclick="go('notifications')"><i class="fa-solid fa-bell"></i><span class="notif-count" id="topbarNotifBadge">0</span></button>
+        <div class="user-pill" id="userPill">
+          <div class="user-pill-avatar" id="topbarAvatar">--</div>
+          <span class="user-pill-name" id="topbarUserName">Admin</span>
+          <i class="fa-solid fa-chevron-down chev"></i>
+          <div class="profile-dropdown" id="profileDropdown">
+            <div class="dropdown-item" onclick="go('profile')"><i class="fa-solid fa-user"></i> Profile</div>
+            <div class="dropdown-item" onclick="go('settings')"><i class="fa-solid fa-gear"></i> Settings</div>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-item danger" data-logout-trigger><i class="fa-solid fa-right-from-bracket"></i> Logout</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="dash-content">
+
+      <!-- ════════════ OVERVIEW ════════════ -->
+      <section class="section" id="sec-overview">
+        <div class="grid-6" style="margin-bottom:22px;">
+          <div class="stat-card c-green"><div class="stat-icon si-green"><i class="fa-solid fa-users"></i></div><div class="stat-val" id="ovTotalUsers">0</div><div class="stat-label">Total Users</div><span class="stat-trend trend-up"><i class="fa-solid fa-arrow-up"></i> Growing</span></div>
+          <div class="stat-card c-blue"><div class="stat-icon si-blue"><i class="fa-solid fa-recycle"></i></div><div class="stat-val" id="ovBottlesRecycled">0</div><div class="stat-label">Bottles Recycled</div><span class="stat-trend trend-up"><i class="fa-solid fa-arrow-up"></i> All time</span></div>
+          <div class="stat-card c-gold"><div class="stat-icon si-gold"><i class="fa-solid fa-coins"></i></div><div class="stat-val" id="ovRewardsPaid">₦0</div><div class="stat-label">Total Rewards Paid</div><span class="stat-trend trend-up"><i class="fa-solid fa-star"></i> Cumulative</span></div>
+          <div class="stat-card c-green"><div class="stat-icon si-green"><i class="fa-solid fa-location-dot"></i></div><div class="stat-val" id="ovActiveRVMs">0</div><div class="stat-label">Active RVM Stations</div><span class="stat-trend trend-up"><i class="fa-solid fa-signal"></i> Online</span></div>
+          <div class="stat-card c-red"><div class="stat-icon si-red"><i class="fa-solid fa-money-bill-wave"></i></div><div class="stat-val" id="ovPendingWithdrawals">0</div><div class="stat-label">Pending Withdrawals</div><span class="stat-trend trend-down"><i class="fa-solid fa-clock"></i> Awaiting</span></div>
+          <div class="stat-card c-green"><div class="stat-icon si-green"><i class="fa-solid fa-leaf"></i></div><div class="stat-val" id="ovCarbonSaved">0kg</div><div class="stat-label">Carbon Emission Saved</div><span class="stat-trend trend-up"><i class="fa-solid fa-seedling"></i> Impact</span></div>
+        </div>
+
+        <div class="grid-2" style="margin-bottom:20px;">
+          <div class="chart-card"><div class="chart-card-head"><h4><i class="fa-solid fa-chart-line" style="color:var(--green-400);margin-right:6px;"></i>Monthly Recycling Trend</h4></div><div class="chart-wrap"><canvas id="chartRecyclingTrend"></canvas></div></div>
+          <div class="chart-card"><div class="chart-card-head"><h4><i class="fa-solid fa-chart-pie" style="color:var(--blue);margin-right:6px;"></i>Material Distribution</h4></div><div class="chart-wrap"><canvas id="chartMaterialDist"></canvas></div></div>
+        </div>
+        <div class="grid-2">
+          <div class="chart-card"><div class="chart-card-head"><h4><i class="fa-solid fa-chart-bar" style="color:var(--blue);margin-right:6px;"></i>User Growth</h4></div><div class="chart-wrap"><canvas id="chartUserGrowth"></canvas></div></div>
+          <div class="chart-card"><div class="chart-card-head"><h4><i class="fa-solid fa-chart-area" style="color:var(--gold);margin-right:6px;"></i>Reward Payments</h4></div><div class="chart-wrap"><canvas id="chartRewardPayments"></canvas></div></div>
+        </div>
+      </section>
+
+      <!-- ════════════ USERS ════════════ -->
+      <section class="section" id="sec-users">
+        <div class="page-heading"><div><h2>User Management</h2><p>View, edit, and manage all registered users.</p></div></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:18px;">
+          <div class="filter-pills">
+            <button class="filter-pill active" data-user-filter="all">All</button>
+            <button class="filter-pill" data-user-filter="active">Active</button>
+            <button class="filter-pill" data-user-filter="inactive">Inactive</button>
+            <button class="filter-pill" data-user-filter="suspended">Suspended</button>
+          </div>
+          <div style="position:relative;"><i class="fa-solid fa-magnifying-glass" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-mute);font-size:.85rem;"></i><input type="text" id="userSearch" class="input" placeholder="Search users…" style="padding-left:34px;width:230px;" /></div>
+        </div>
+        <div class="card">
+          <div class="table-wrap"><table class="dtable"><thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Wallet</th><th>Status</th><th>Action</th></tr></thead><tbody id="usersBody"></tbody></table></div>
+          <div class="card-body" style="padding-top:0;"><div class="pagination" id="usersPagination"></div></div>
+        </div>
+      </section>
+
+      <!-- ════════════ DEPOSITS ════════════ -->
+      <section class="section" id="sec-deposits">
+        <div class="page-heading"><div><h2>Recycling Deposits</h2><p>Review and approve recycling deposit submissions.</p></div></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:18px;">
+          <div class="filter-pills">
+            <button class="filter-pill active" data-deposit-filter="all">All</button>
+            <button class="filter-pill" data-deposit-filter="pending">Pending</button>
+            <button class="filter-pill" data-deposit-filter="approved">Approved</button>
+            <button class="filter-pill" data-deposit-filter="rejected">Rejected</button>
+          </div>
+          <div style="position:relative;"><i class="fa-solid fa-magnifying-glass" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-mute);font-size:.85rem;"></i><input type="text" id="depositSearch" class="input" placeholder="Search deposits…" style="padding-left:34px;width:230px;" /></div>
+        </div>
+        <div class="card">
+          <div class="table-wrap"><table class="dtable"><thead><tr><th>Deposit ID</th><th>User</th><th>Material</th><th>Qty</th><th>Points</th><th>Reward</th><th>Date</th><th>Status</th><th>Action</th></tr></thead><tbody id="depositsBody"></tbody></table></div>
+          <div class="card-body" style="padding-top:0;"><div class="pagination" id="depositsPagination"></div></div>
+        </div>
+      </section>
+
+      <!-- ════════════ WITHDRAWALS ════════════ -->
+      <section class="section" id="sec-withdrawals">
+        <div class="page-heading"><div><h2>Withdrawal Requests</h2><p>Approve or reject user withdrawal requests.</p></div></div>
+        <div class="grid-3" style="margin-bottom:20px;">
+          <div class="stat-card c-gold"><div class="stat-icon si-gold"><i class="fa-solid fa-hourglass-half"></i></div><div class="stat-val" id="wdPendingCount">0</div><div class="stat-label">Pending</div></div>
+          <div class="stat-card c-green"><div class="stat-icon si-green"><i class="fa-solid fa-check"></i></div><div class="stat-val" id="wdApprovedCount">0</div><div class="stat-label">Approved</div></div>
+          <div class="stat-card c-red"><div class="stat-icon si-red"><i class="fa-solid fa-xmark"></i></div><div class="stat-val" id="wdRejectedCount">0</div><div class="stat-label">Rejected</div></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><div class="card-title"><i class="fa-solid fa-list"></i> All Withdrawal Requests</div></div>
+          <div class="table-wrap"><table class="dtable"><thead><tr><th>User</th><th>Bank</th><th>Account Number</th><th>Amount</th><th>Date</th><th>Status</th><th>Action</th></tr></thead><tbody id="withdrawalsBody"></tbody></table></div>
+        </div>
+      </section>
+
+      <!-- ════════════ WALLET MGMT ════════════ -->
+      <section class="section" id="sec-wallet">
+        <div class="page-heading"><div><h2>Wallet Management</h2><p>Monitor platform-wide wallet activity and payments.</p></div></div>
+        <div class="grid-3" style="margin-bottom:20px;">
+          <div class="stat-card c-green"><div class="stat-icon si-green"><i class="fa-solid fa-sack-dollar"></i></div><div class="stat-val" id="wmTotalPaid">₦0</div><div class="stat-label">Total Money Paid</div></div>
+          <div class="stat-card c-gold"><div class="stat-icon si-gold"><i class="fa-solid fa-clock"></i></div><div class="stat-val" id="wmPendingPayments">₦0</div><div class="stat-label">Pending Payments</div></div>
+          <div class="stat-card c-blue"><div class="stat-icon si-blue"><i class="fa-solid fa-receipt"></i></div><div class="stat-val" id="wmTotalTx">0</div><div class="stat-label">Wallet Transactions</div></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><div class="card-title"><i class="fa-solid fa-arrows-left-right"></i> Transaction History</div></div>
+          <div class="table-wrap"><table class="dtable"><thead><tr><th>User</th><th>Description</th><th>Amount</th><th>Date</th><th>Status</th></tr></thead><tbody id="walletTxBody"></tbody></table></div>
+        </div>
+      </section>
+
+      <!-- ════════════ RVM MGMT ════════════ -->
+      <section class="section" id="sec-rvm">
+        <div class="page-heading"><div><h2>RVM Management</h2><p>Manage Reverse Vending Machine stations across Nigeria.</p></div></div>
+        <div class="grid-2">
+          <div class="card" style="grid-column: span 2;">
+            <div class="card-head"><div class="card-title"><i class="fa-solid fa-box-archive"></i> All RVM Stations</div></div>
+            <div class="table-wrap"><table class="dtable"><thead><tr><th>Machine ID</th><th>Location</th><th>Status</th><th>Capacity</th><th>Last Maintenance</th><th>Action</th></tr></thead><tbody id="rvmBody"></tbody></table></div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:20px;">
+          <div class="card-head"><div class="card-title"><i class="fa-solid fa-plus"></i> Add New RVM</div></div>
+          <div class="card-body">
+            <form id="addRvmForm" style="display:flex;flex-direction:column;gap:16px;">
+              <div class="grid-2">
+                <div class="fg"><label for="rvmId">Machine ID</label><input type="text" id="rvmId" class="input" placeholder="e.g. RVM-008" /></div>
+                <div class="fg"><label for="rvmLocation">Location</label><input type="text" id="rvmLocation" class="input" placeholder="e.g. Novare Mall, Abuja" /></div>
+              </div>
+              <div class="grid-2">
+                <div class="fg"><label for="rvmLat">Latitude</label><input type="text" id="rvmLat" class="input" placeholder="e.g. 9.0579" /></div>
+                <div class="fg"><label for="rvmLng">Longitude</label><input type="text" id="rvmLng" class="input" placeholder="e.g. 7.4951" /></div>
+              </div>
+              <div class="grid-2">
+                <div class="fg"><label for="rvmCapacity">Capacity (%)</label><input type="number" id="rvmCapacity" class="input" placeholder="0–100" min="0" max="100" /></div>
+                <div class="fg"><label for="rvmStatus">Status</label><select id="rvmStatus" class="input"><option>Active</option><option>Inactive</option><option>Maintenance</option></select></div>
+              </div>
+              <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save Machine</button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════ LEADERBOARD MGMT ════════════ -->
+      <section class="section" id="sec-leaderboard">
+        <div class="page-heading">
+          <div><h2>Leaderboard Management</h2><p>View and manage the community leaderboard.</p></div>
+          <div style="display:flex;gap:10px;">
+            <button class="btn btn-outline btn-sm" id="resetLeaderboardBtn"><i class="fa-solid fa-rotate-left"></i> Reset Monthly</button>
+            <button class="btn btn-primary btn-sm" id="generateRankingsBtn"><i class="fa-solid fa-arrows-rotate"></i> Generate Rankings</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="table-wrap"><table class="dtable"><thead><tr><th>Rank</th><th>Name</th><th>Points</th><th>Items Recycled</th><th>Reward Value</th></tr></thead><tbody id="lbAdminBody"></tbody></table></div>
+        </div>
+      </section>
+
+      <!-- ════════════ ANALYTICS ════════════ -->
+      <section class="section" id="sec-analytics">
+        <div class="page-heading"><div><h2>Analytics</h2><p>Detailed platform performance metrics.</p></div></div>
+        <div class="grid-6" style="margin-bottom:20px;">
+          <div class="stat-card c-green"><div class="stat-icon si-green"><i class="fa-solid fa-calendar-day"></i></div><div class="stat-val">412</div><div class="stat-label">Daily Deposits</div></div>
+          <div class="stat-card c-blue"><div class="stat-icon si-blue"><i class="fa-solid fa-calendar-week"></i></div><div class="stat-val">2,840</div><div class="stat-label">Weekly Deposits</div></div>
+          <div class="stat-card c-gold"><div class="stat-icon si-gold"><i class="fa-solid fa-calendar"></i></div><div class="stat-val">13,200</div><div class="stat-label">Monthly Deposits</div></div>
+          <div class="stat-card c-green"><div class="stat-icon si-green"><i class="fa-solid fa-sack-dollar"></i></div><div class="stat-val">₦420K</div><div class="stat-label">Revenue Generated</div></div>
+          <div class="stat-card c-blue"><div class="stat-icon si-blue"><i class="fa-solid fa-user-plus"></i></div><div class="stat-val">980</div><div class="stat-label">Users Registered</div></div>
+          <div class="stat-card c-gold"><div class="stat-icon si-gold"><i class="fa-solid fa-coins"></i></div><div class="stat-val">₦2.45M</div><div class="stat-label">Rewards Paid</div></div>
+        </div>
+        <div class="grid-2" style="margin-bottom:20px;">
+          <div class="chart-card"><div class="chart-card-head"><h4>Deposits — Line Chart</h4></div><div class="chart-wrap sm"><canvas id="chartAnalyticsLine"></canvas></div></div>
+          <div class="chart-card"><div class="chart-card-head"><h4>Revenue — Bar Chart</h4></div><div class="chart-wrap sm"><canvas id="chartAnalyticsBar"></canvas></div></div>
+        </div>
+        <div class="grid-2">
+          <div class="chart-card"><div class="chart-card-head"><h4>Material Split — Pie Chart</h4></div><div class="chart-wrap sm"><canvas id="chartAnalyticsPie"></canvas></div></div>
+          <div class="chart-card"><div class="chart-card-head"><h4>Weekly Activity — Heat Map</h4></div><div class="chart-wrap sm"><canvas id="chartAnalyticsHeat"></canvas></div></div>
+        </div>
+      </section>
+
+      <!-- ════════════ CONTENT MGMT ════════════ -->
+      <section class="section" id="sec-content">
+        <div class="page-heading"><div><h2>Educational Content</h2><p>Manage recycling education articles published to users.</p></div></div>
+        <div class="card" style="margin-bottom:20px;">
+          <div class="table-wrap"><table class="dtable"><thead><tr><th>Title</th><th>Category</th><th>Date Posted</th><th>Status</th><th>Action</th></tr></thead><tbody id="contentBody"></tbody></table></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><div class="card-title"><i class="fa-solid fa-plus"></i> Add New Content</div></div>
+          <div class="card-body">
+            <form id="addContentForm" style="display:flex;flex-direction:column;gap:16px;">
+              <div class="fg"><label for="contentTitle">Title</label><input type="text" id="contentTitle" class="input" placeholder="Article title" /></div>
+              <div class="fg"><label for="contentDesc">Description</label><textarea id="contentDesc" class="input" placeholder="Short description of the article"></textarea></div>
+              <div class="grid-2">
+                <div class="fg"><label>Image</label><div class="thumb-placeholder"><i class="fa-solid fa-image"></i></div></div>
+                <div class="fg"><label for="contentCategory">Category</label><select id="contentCategory" class="input"><option>Awareness</option><option>Technology</option><option>Global</option><option>Education</option><option>Tips</option></select></div>
+              </div>
+              <button type="submit" class="btn btn-primary"><i class="fa-solid fa-upload"></i> Publish Content</button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════ NOTIFICATIONS ════════════ -->
+      <section class="section" id="sec-notifications">
+        <div class="page-heading"><div><h2>Notifications <span class="badge badge-green" id="notifUnreadCount" style="margin-left:6px;">0</span></h2><p>System alerts and platform activity.</p></div></div>
+        <div class="card">
+          <div class="card-head"><div class="card-title"><i class="fa-solid fa-bell"></i> All Notifications</div><button class="btn btn-outline btn-sm" id="markAllReadBtn">Mark All Read</button></div>
+          <div class="card-body"><div id="notifList"></div></div>
+        </div>
+      </section>
+
+      <!-- ════════════ SETTINGS ════════════ -->
+      <section class="section" id="sec-settings">
+        <div class="page-heading"><div><h2>Settings</h2><p>Configure platform-wide settings and preferences.</p></div></div>
+        <form id="settingsForm">
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-head"><div class="card-title"><i class="fa-solid fa-sliders"></i> General Settings</div></div>
+              <div class="card-body" style="display:flex;flex-direction:column;gap:16px;">
+                <div class="fg"><label>Reward Rate (pts per item)</label><input type="number" class="input" value="15" /></div>
+                <div class="fg"><label>EcoPoint Conversion Rate (pts per ₦1)</label><input type="number" class="input" value="10" /></div>
+                <div class="fg"><label>Minimum Withdrawal Amount (₦)</label><input type="number" class="input" value="500" /></div>
+                <div class="set-item" style="margin-bottom:0;"><div class="set-left"><div class="set-icon sic-red"><i class="fa-solid fa-triangle-exclamation"></i></div><div><div class="set-title">Maintenance Mode</div><div class="set-desc">Temporarily disable public access</div></div></div><label class="toggle"><input type="checkbox" /><span class="toggle-sl"></span></label></div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-head"><div class="card-title"><i class="fa-solid fa-bell"></i> Notification & Display</div></div>
+              <div class="card-body" style="display:flex;flex-direction:column;gap:0;">
+                <div class="set-item"><div class="set-left"><div class="set-icon sic-green"><i class="fa-solid fa-envelope"></i></div><div><div class="set-title">Email Notifications</div><div class="set-desc">Platform-wide email alerts</div></div></div><label class="toggle"><input type="checkbox" checked /><span class="toggle-sl"></span></label></div>
+                <div class="set-item"><div class="set-left"><div class="set-icon sic-blue"><i class="fa-solid fa-comment-sms"></i></div><div><div class="set-title">SMS Notifications</div><div class="set-desc">Platform-wide SMS alerts</div></div></div><label class="toggle"><input type="checkbox" /><span class="toggle-sl"></span></label></div>
+                <div class="set-item"><div class="set-left"><div class="set-icon sic-gold"><i class="fa-solid fa-mobile-screen"></i></div><div><div class="set-title">Push Notifications</div><div class="set-desc">In-app push alerts</div></div></div><label class="toggle"><input type="checkbox" checked /><span class="toggle-sl"></span></label></div>
+                <div class="set-item" style="margin-bottom:0;"><div class="set-left"><div class="set-icon sic-green"><i class="fa-solid fa-moon"></i></div><div><div class="set-title">Dark Mode</div><div class="set-desc">Switch admin panel theme</div></div></div><label class="toggle"><input type="checkbox" id="darkModeToggle" /><span class="toggle-sl"></span></label></div>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" style="margin-top:20px;"><i class="fa-solid fa-floppy-disk"></i> Save Settings</button>
+        </form>
+      </section>
+
+      <!-- ════════════ ADMIN PROFILE ════════════ -->
+      <section class="section" id="sec-profile">
+        <div class="page-heading"><div><h2>Admin Profile</h2><p>Manage your administrator account details.</p></div></div>
+        <div class="admin-profile-banner">
+          <div class="admin-avatar-lg" id="apInitials">--</div>
+          <div class="admin-profile-info">
+            <h3 id="apName">Loading...</h3><p id="apEmail">--</p>
+            <span class="admin-role-badge"><i class="fa-solid fa-shield-halved"></i> <span id="apRole">Administrator</span></span>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="fa-solid fa-id-card"></i> Account Information</div></div>
+            <div class="card-body" style="display:flex;flex-direction:column;gap:16px;">
+              <div class="detail-row"><span>Role</span><span id="apRole2">Administrator</span></div>
+              <div class="detail-row"><span>Last Login</span><span id="apLastLogin">—</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="fa-solid fa-pen-to-square"></i> Edit Profile</div></div>
+            <div class="card-body">
+              <form id="adminProfileForm" style="display:flex;flex-direction:column;gap:14px;">
+                <div class="fg"><label for="apEditName">Name</label><input type="text" id="apEditName" class="input" /></div>
+                <div class="fg"><label for="apEditEmail">Email</label><input type="email" id="apEditEmail" class="input" /></div>
+                <div class="fg"><label>Password</label><input type="password" class="input" placeholder="New password" /></div>
+                <div class="fg"><label>Confirm Password</label><input type="password" class="input" placeholder="Confirm new password" /></div>
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /.dash-content -->
+  </div><!-- /.dash-main -->
+</div><!-- /.dash-layout -->
+
+<!-- User Detail Modal -->
+<div class="modal-overlay" id="userDetailModal">
+  <div class="modal-box">
+    <div class="modal-header-row"><h3 style="margin:0;">User Details</h3><div class="modal-close-x" data-modal-close="userDetailModal"><i class="fa-solid fa-xmark"></i></div></div>
+    <div id="userDetailBody"></div>
+  </div>
+</div>
+
+<!-- Generic Confirm Action Modal -->
+<div class="modal-overlay" id="confirmActionModal">
+  <div class="modal-box confirm">
+    <div class="modal-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+    <h3 id="confirmModalTitle">Are you sure?</h3>
+    <p id="confirmModalText">This action cannot be undone.</p>
+    <div class="modal-actions">
+      <button class="btn btn-outline" data-modal-close="confirmActionModal">Cancel</button>
+      <button class="btn btn-danger" id="confirmActionBtn">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- Logout Modal -->
+<div class="modal-overlay" id="logoutModal">
+  <div class="modal-box confirm">
+    <div class="modal-icon"><i class="fa-solid fa-right-from-bracket"></i></div>
+    <h3>Are you sure you want to logout?</h3>
+    <p>You will need to log in again to access the admin panel.</p>
+    <div class="modal-actions">
+      <button class="btn btn-outline" data-modal-close="logoutModal">Cancel</button>
+      <button class="btn btn-danger" id="logoutConfirmBtn">Logout</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
+
+<script src="../java/admindash.js"></script>
+</body>
+</html>

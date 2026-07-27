@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="../css/dash.css" />
+</head>
+<body>
+<div class="dbl">
+
+  <!-- Overlay -->
+  <div class="sb-overlay" id="overlay"></div>
+
+  <!-- ══════════════════ SIDEBAR ══════════════════ -->
+  <aside class="sidebar" id="sidebar">
+
+    <a href="../index.html" class="sb-brand">
+      <div class="sb-logo"><i class="fa-solid fa-recycle"></i></div>
+      <span class="sb-name">Eco<em>leey</em></span>
+    </a>
+
+    <div class="sb-user">
+      <div class="sb-av" id="sb-av-txt">--</div>
+      <div>
+        <div class="sb-uname" id="sb-uname">Loading...</div>
+        <div class="sb-email" id="sb-email"></div>
+      </div>
+    </div>
+
+    <nav class="sb-nav">
+      <div class="sb-group">Main</div>
+      <a class="sb-link" data-s="overview"><i class="fa-solid fa-house"></i> Dashboard Overview</a>
+      <a class="sb-link" data-s="profile"><i class="fa-solid fa-user"></i> My Profile</a>
+      <a class="sb-link" data-s="schedule"><i class="fa-solid fa-calendar-check"></i> Schedule Visit</a>
+      <a class="sb-link" data-s="history"><i class="fa-solid fa-clock-rotate-left"></i> Recycling History</a>
+      <a class="sb-link" data-s="wallet"><i class="fa-solid fa-wallet"></i> Wallet &amp; Rewards</a>
+      <div class="sb-group">Community</div>
+      <a class="sb-link" data-s="leaderboard"><i class="fa-solid fa-ranking-star"></i> Leaderboard</a>
+      <a class="sb-link" data-s="education"><i class="fa-solid fa-graduation-cap"></i> Education Center</a>
+      <a class="sb-link" data-s="notifications"><i class="fa-solid fa-bell"></i> Notifications</a>
+      <div class="sb-group">Account</div>
+      <a class="sb-link" data-s="settings"><i class="fa-solid fa-gear"></i> Settings</a>
+    </nav>
+
+    <div class="sb-foot">
+      <button class="sb-logout" data-logout>
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- ══════════════════ MAIN ══════════════════ -->
+  <div class="dbmain">
+
+    <!-- Topbar -->
+    <header class="topbar">
+      <div class="tb-left">
+        <button class="hbg" id="hbg" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+        <div class="tb-title" id="tb-title">Dashboard Overview</div>
+      </div>
+      <div class="tb-right">
+        <button class="tb-icon-btn" onclick="go('notifications')" title="Notifications">
+          <i class="fa-solid fa-bell"></i>
+          <span class="tb-badge"></span>
+        </button>
+        <div class="tb-user" onclick="go('profile')" style="cursor:pointer;">
+          <div class="tb-av" id="tb-av-txt">--</div>
+          <span class="tb-uname" id="tb-uname">Loading...</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ══════════════ CONTENT ══════════════ -->
+    <div class="dbc">
+
+      <!-- ─────────────────────────────────────
+           OVERVIEW
+      ───────────────────────────────────── -->
+      <section class="sec" id="s-overview">
+
+        <div class="welcome-banner">
+          <div class="wb-text">
+            <h3 id="ov-greet">Good morning! 👋</h3>
+            <p>You're making a real difference. Keep recycling to earn more rewards.</p>
+          </div>
+          <div class="wb-cta">
+            <button class="btn btn-gold" onclick="go('schedule')">
+              <i class="fa-solid fa-location-dot"></i> Schedule RVM Visit
+            </button>
+          </div>
+        </div>
+
+        <div class="g4" style="margin-bottom:20px;">
+          <div class="stat-card">
+            <div class="stat-icon si-g"><i class="fa-solid fa-wallet"></i></div>
+            <div class="stat-val" id="ov-bal">₦0</div>
+            <div class="stat-lbl">Wallet Balance</div>
+            <span class="stat-trend trend-up"><i class="fa-solid fa-arrow-up"></i> Available</span>
+          </div>
+          <div class="stat-card c-blue">
+            <div class="stat-icon si-blue"><i class="fa-solid fa-recycle"></i></div>
+            <div class="stat-val" id="ov-items">0</div>
+            <div class="stat-lbl">Total Items Recycled</div>
+            <span class="stat-trend trend-up"><i class="fa-solid fa-arrow-up"></i> All time</span>
+          </div>
+          <div class="stat-card c-gold">
+            <div class="stat-icon si-gold"><i class="fa-solid fa-coins"></i></div>
+            <div class="stat-val" id="ov-earned">₦0</div>
+            <div class="stat-lbl">Total Rewards Earned</div>
+            <span class="stat-trend trend-gold"><i class="fa-solid fa-star"></i> Cumulative</span>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon si-g"><i class="fa-solid fa-leaf"></i></div>
+            <div class="stat-val" id="ov-co2">0kg</div>
+            <div class="stat-lbl">CO&#8322; Diverted</div>
+            <span class="stat-trend trend-up"><i class="fa-solid fa-seedling"></i> Impact</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title"><i class="fa-solid fa-clock-rotate-left"></i> Recent Activity</div>
+            <span class="card-action" onclick="go('history')">View All <i class="fa-solid fa-arrow-right"></i></span>
+          </div>
+          <div class="tbl-wrap">
+            <table class="tbl">
+              <thead><tr><th>Date</th><th>Material</th><th>Quantity</th><th>Points</th></tr></thead>
+              <tbody id="ov-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ─────────────────────────────────────
+           PROFILE
+      ───────────────────────────────────── -->
+      <section class="sec" id="s-profile">
+        <div class="pg-head"><h2>My Profile</h2><p>Manage your personal information and account security.</p></div>
+
+        <div class="pf-banner">
+          <div class="pf-av-lg" id="pf-ini">--</div>
+          <div class="pf-info">
+            <h3 id="pf-name">Loading...</h3>
+            <p id="pf-email">--</p>
+            <span class="pf-pill"><i class="fa-solid fa-leaf"></i> Ecoleey Member</span>
+          </div>
+        </div>
+
+        <div class="g2">
+          <!-- Info -->
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="fa-solid fa-id-card"></i> Account Information</div></div>
+            <div class="card-body" style="display:flex;flex-direction:column;gap:16px;">
+              <div class="pf-field"><div class="pf-field-lbl">Full Name</div><div class="pf-field-val" id="pf-f-name">—</div></div>
+              <div class="pf-field"><div class="pf-field-lbl">Email Address</div><div class="pf-field-val" id="pf-f-email">—</div></div>
+              <div class="pf-field"><div class="pf-field-lbl">Phone Number</div><div class="pf-field-val" id="pf-f-phone">—</div></div>
+              <div class="pf-field"><div class="pf-field-lbl">Address</div><div class="pf-field-val" id="pf-f-addr">—</div></div>
+              <div class="pf-field"><div class="pf-field-lbl">Member Since</div><div class="pf-field-val" id="pf-f-join">—</div></div>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:18px;">
+            <!-- Edit form -->
+            <div class="card">
+              <div class="card-head"><div class="card-title"><i class="fa-solid fa-pen-to-square"></i> Edit Profile</div></div>
+              <div class="card-body">
+                <form id="pf-form" style="display:flex;flex-direction:column;gap:13px;">
+                  <div class="fg"><label for="pf-edit-name">Full Name</label><input type="text" id="pf-edit-name" class="inp" placeholder="Your full name" /></div>
+                  <div class="fg"><label for="pf-edit-email">Email</label><input type="email" id="pf-edit-email" class="inp" placeholder="you@email.com" /></div>
+                  <div class="fg"><label for="pf-edit-phone">Phone</label><input type="tel" id="pf-edit-phone" class="inp" placeholder="+234 800 000 0000" /></div>
+                  <div class="fg"><label for="pf-edit-addr">Address</label><input type="text" id="pf-edit-addr" class="inp" placeholder="Your address" /></div>
+                  <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
+                </form>
+              </div>
+            </div>
+            <!-- Password form -->
+            <div class="card">
+              <div class="card-head"><div class="card-title"><i class="fa-solid fa-lock"></i> Change Password</div></div>
+              <div class="card-body">
+                <form id="pw-form" style="display:flex;flex-direction:column;gap:13px;">
+                  <div class="fg"><label for="pw-cur">Current Password</label><input type="password" id="pw-cur" class="inp" placeholder="Current password" /></div>
+                  <div class="fg"><label for="pw-new">New Password</label><input type="password" id="pw-new" class="inp" placeholder="New password (min 8 chars)" /></div>
+                  <div class="fg"><label for="pw-cf">Confirm New Password</label><input type="password" id="pw-cf" class="inp" placeholder="Repeat new password" /></div>
+                  <button type="submit" class="btn btn-outline"><i class="fa-solid fa-key"></i> Update Password</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─────────────────────────────────────
+           SCHEDULE
+      ───────────────────────────────────── -->
+      <section class="sec" id="s-schedule">
+        <div class="pg-head"><h2>Schedule RVM Visit</h2><p>Book a visit to your nearest Reverse Vending Machine.</p></div>
+
+        <div class="g2">
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="fa-solid fa-calendar-plus"></i> Book a Visit</div></div>
+            <div class="card-body">
+              <form id="sch-form" style="display:flex;flex-direction:column;gap:14px;">
+                <div class="fg">
+                  <label for="sch-loc">Select RVM Location</label>
+                  <select id="sch-loc" class="inp">
+                    <option value="">— Choose a location —</option>
+                    <option>Jabi Lake Mall, Abuja</option>
+                    <option>Wuse II Market Area, Abuja</option>
+                    <option>University of Abuja RVM</option>
+                    <option>Garki Area 11, Abuja</option>
+                    <option>Ikeja City Mall, Lagos</option>
+                    <option>Victoria Island RVM, Lagos</option>
+                    <option>Lekki Phase 1, Lagos</option>
+                    <option>UNILAG Campus, Lagos</option>
+                    <option>Palms Shopping Mall</option>
+                    <option>Novare Mall, Abuja</option>
+                  </select>
+                </div>
+                <div class="fg"><label for="sch-date">Date</label><input type="date" id="sch-date" class="inp" /></div>
+                <div class="fg"><label for="sch-time">Preferred Time</label><input type="time" id="sch-time" class="inp" /></div>
+                <div class="alert alert-info">
+                  <i class="fa-solid fa-circle-info"></i>
+                  RVMs operate 7 days a week. Booking ensures the machine is ready for your deposit.
+                </div>
+                <button type="submit" class="btn btn-primary btn-full"><i class="fa-solid fa-calendar-check"></i> Book Visit</button>
+              </form>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="fa-solid fa-list-check"></i> Upcoming Bookings</div></div>
+            <div class="card-body">
+              <div id="sch-list" style="display:flex;flex-direction:column;gap:10px;"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─────────────────────────────────────
+           HISTORY
+      ───────────────────────────────────── -->
+      <section class="sec" id="s-history">
+        <div class="pg-head"><h2>Recycling History</h2><p>A complete record of every item recycled through Ecoleey.</p></div>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+          <div style="display:flex;gap:7px;flex-wrap:wrap;">
+            <button class="btn btn-outline btn-sm" data-filter="today">Today</button>
+            <button class="btn btn-outline btn-sm" data-filter="week">This Week</button>
+            <button class="btn btn-outline btn-sm" data-filter="month">This Month</button>
+            <button class="btn btn-primary btn-sm" data-filter="all">All Records</button>
+          </div>
+          <div style="position:relative;">
+            <i class="fa-solid fa-magnifying-glass" style="position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.8rem;"></i>
+            <input type="text" id="hist-search" class="inp" placeholder="Search…" style="padding-left:32px;width:200px;" />
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="tbl-wrap">
+            <table class="tbl">
+              <thead><tr><th>Date</th><th>Material Type</th><th>Quantity</th><th>Points</th><th>Reward Value</th></tr></thead>
+              <tbody id="hist-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─────────────────────────────────────
+           WALLET
+      ───────────────────────────────────── -->
+      <section class="sec" id="s-wallet">
+        <div class="pg-head"><h2>Wallet &amp; Rewards</h2><p>Manage your balance and withdraw to your bank account.</p></div>
+
+        <div class="wallet-hero">
+          <div class="wh-inner">
+            <div>
+              <div class="wh-label">Current Wallet Balance</div>
+              <div class="wh-amount" id="wlt-bal">₦0.00</div>
+              <div class="wh-sub">Redeemable to any Nigerian bank</div>
+            </div>
+            <div class="wh-btns">
+              <button class="wh-btn primary"><i class="fa-solid fa-building-columns"></i> Withdraw</button>
+              <button class="wh-btn sec"><i class="fa-solid fa-share-nodes"></i> Share</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="wlt-stats">
+          <div class="wlt-stat"><div class="wlt-stat-lbl">Total Earned</div><div class="wlt-stat-val" id="wlt-earned">₦0</div></div>
+          <div class="wlt-stat"><div class="wlt-stat-lbl">Total Withdrawn</div><div class="wlt-stat-val" id="wlt-withdrawn">₦0</div></div>
+          <div class="wlt-stat"><div class="wlt-stat-lbl">Pending Withdrawals</div><div class="wlt-stat-val" id="wlt-pending">₦0</div></div>
+        </div>
+
+        <div class="card" style="margin-bottom:20px;">
+          <div class="card-head"><div class="card-title"><i class="fa-solid fa-arrows-left-right"></i> Transaction History</div></div>
+          <div class="tbl-wrap">
+            <table class="tbl">
+              <thead><tr><th>Date</th><th>Type</th><th>Description</th><th>Amount</th></tr></thead>
+              <tbody id="wlt-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><div class="card-title"><i class="fa-solid fa-money-bill-transfer"></i> Request Withdrawal</div></div>
+          <div class="card-body">
+            <form id="wd-form" style="display:flex;flex-direction:column;gap:14px;">
+              <div class="wd-grid">
+                <div class="fg"><label for="wd-bank">Bank Name</label>
+                  <select id="wd-bank" class="inp">
+                    <option value="">— Select bank —</option>
+                    <option>Access Bank</option><option>First Bank</option>
+                    <option>GTBank</option><option>Zenith Bank</option>
+                    <option>UBA</option><option>Opay</option><option>Kuda Bank</option>
+                  </select>
+                </div>
+                <div class="fg"><label for="wd-aname">Account Name</label><input type="text" id="wd-aname" class="inp" placeholder="Account name" /></div>
+                <div class="fg"><label for="wd-anum">Account Number</label><input type="text" id="wd-anum" class="inp" placeholder="10-digit number" maxlength="10" /></div>
+                <div class="fg"><label for="wd-amt">Amount (₦)</label><input type="number" id="wd-amt" class="inp" placeholder="Minimum ₦500" min="500" /></div>
+              </div>
+              <div class="alert alert-gold">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                Withdrawal requests are reviewed and approved by Ecoleey administrators before payment. Allow up to 24 hours.
+              </div>
+              <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Submit Withdrawal Request</button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─────────────────────────────────────
+           LEADERBOARD
+      ───────────────────────────────────── -->
+      <section class="sec" id="s-leaderboard">
+        <div class="pg-head"><h2>Leaderboard</h2><p>See where you stand among the top recyclers in the Ecoleey community.</p></div>
+
+        <div class="lb-my-rank">
+          <div class="lb-rank-item"><div class="lb-rank-label">Your Rank</div><div class="lb-rank-val" id="lb-rank">#—</div></div>
+          <div class="lb-rank-item"><div class="lb-rank-label">Your Points</div><div class="lb-rank-val" id="lb-pts">—</div></div>
+          <div class="lb-rank-item" style="text-align:right;">
+            <div class="lb-rank-label">Keep Going!</div>
+            <div style="font-size:.84rem;color:rgba(255,255,255,.7);">Recycle more to move up.</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><div class="card-title"><i class="fa-solid fa-trophy"></i> Top 10 Recyclers</div></div>
+          <div class="card-body"><div id="lb-list"></div></div>
+        </div>
+      </section>
+
+      <!-- ─────────────────────────────────────
+           EDUCATION
+      ───────────────────────────────────── -->
+      <section class="sec" id="s-education">
+        <div class="pg-head"><h2>Education Center</h2><p>Learn about recycling, sustainability, and how to make the most of Ecoleey.</p></div>
+        <div class="edu-grid">
+          <div class="edu-card">
+            <div class="edu-img ei1">&#9851;&#65039;</div>
+            <div class="edu-body">
+              <div class="edu-title">Recycling Basics</div>
+              <div class="edu-desc">Understand the fundamentals of recycling and why it matters for Nigeria's environment and future.</div>
+              <a href="../education.html#why-recycling" class="edu-link">Read More <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+          <div class="edu-card">
+            <div class="edu-img ei2">&#127968;</div>
+            <div class="edu-body">
+              <div class="edu-title">How RVMs Work</div>
+              <div class="edu-desc">Discover the technology behind Reverse Vending Machines and how they reward your deposits.</div>
+              <a href="../education.html#rvm" class="edu-link">Read More <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+          <div class="edu-card">
+            <div class="edu-img ei3">&#127862;</div>
+            <div class="edu-body">
+              <div class="edu-title">Plastic Recycling</div>
+              <div class="edu-desc">Learn which plastics are accepted, how to prepare them, and how they are repurposed after collection.</div>
+              <a href="../education.html#materials" class="edu-link">Read More <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+          <div class="edu-card">
+            <div class="edu-img ei4">&#127870;</div>
+            <div class="edu-body">
+              <div class="edu-title">Glass Recycling</div>
+              <div class="edu-desc">Explore how returning glass bottles saves significant energy and reduces raw material extraction.</div>
+              <a href="../education.html#materials" class="edu-link">Read More <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+          <div class="edu-card">
+            <div class="edu-img ei5">&#128260;</div>
+            <div class="edu-body">
+              <div class="edu-title">Circular Economy</div>
+              <div class="edu-desc">Understand how circular economy principles can transform Nigeria's waste management system.</div>
+              <a href="../education.html#drs" class="edu-link">Read More <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+          <div class="edu-card">
+            <div class="edu-img ei6">&#127807;</div>
+            <div class="edu-body">
+              <div class="edu-title">Sustainability Tips</div>
+              <div class="edu-desc">Simple everyday habits that reduce your environmental footprint and build greener communities.</div>
+              <a href="../education.html#tips" class="edu-link">Read More <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─────────────────────────────────────
+           NOTIFICATIONS
+      ───────────────────────────────────── -->
+      <section class="sec" id="s-notifications">
+        <div class="pg-head">
+          <h2>Notifications &nbsp;<span id="notif-count" style="background:var(--g500);color:#fff;border-radius:999px;padding:2px 9px;font-size:.72rem;font-family:'Open Sans',sans-serif;font-weight:700;vertical-align:middle;">0</span></h2>
+          <p>Stay up to date with rewards, withdrawals, and platform updates.</p>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title"><i class="fa-solid fa-bell"></i> All Notifications</div>
+            <button class="btn btn-outline btn-sm" onclick="document.querySelectorAll('.notif-dot').forEach(d=>d.classList.add('read'))">Mark All Read</button>
+          </div>
+          <div class="card-body"><div id="notif-list"></div></div>
+        </div>
+      </section>
+
+      <!-- ─────────────────────────────────────
+           SETTINGS
+      ───────────────────────────────────── -->
+      <section class="sec" id="s-settings">
+        <div class="pg-head"><h2>Settings</h2><p>Manage your account preferences and notification settings.</p></div>
+
+        <div class="g2">
+          <div style="display:flex;flex-direction:column;gap:18px;">
+            <div class="card">
+              <div class="card-head"><div class="card-title"><i class="fa-solid fa-sliders"></i> Account Settings</div></div>
+              <div class="card-body" style="display:flex;flex-direction:column;gap:10px;">
+                <div class="set-item" onclick="go('profile')" style="cursor:pointer;">
+                  <div class="set-left">
+                    <div class="set-icon sic-g"><i class="fa-solid fa-user-pen"></i></div>
+                    <div><div class="set-title">Update Personal Information</div><div class="set-desc">Edit name, email, phone and address</div></div>
+                  </div>
+                  <i class="fa-solid fa-chevron-right" style="color:var(--border);"></i>
+                </div>
+                <div class="set-item" onclick="go('profile')" style="cursor:pointer;">
+                  <div class="set-left">
+                    <div class="set-icon sic-b"><i class="fa-solid fa-lock"></i></div>
+                    <div><div class="set-title">Change Password</div><div class="set-desc">Update your account password</div></div>
+                  </div>
+                  <i class="fa-solid fa-chevron-right" style="color:var(--border);"></i>
+                </div>
+                <div class="set-item">
+                  <div class="set-left">
+                    <div class="set-icon sic-gray"><i class="fa-solid fa-shield-halved"></i></div>
+                    <div><div class="set-title">Privacy Settings</div><div class="set-desc">Manage your data sharing preferences</div></div>
+                  </div>
+                  <i class="fa-solid fa-chevron-right" style="color:var(--border);"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-head"><div class="card-title" style="color:var(--red);"><i class="fa-solid fa-triangle-exclamation"></i> Danger Zone</div></div>
+              <div class="card-body">
+                <p style="font-size:.86rem;color:var(--muted);margin-bottom:14px;">Deleting your account is permanent. All EcoPoints, history, and data will be lost.</p>
+                <button class="btn btn-danger"><i class="fa-solid fa-trash-can"></i> Delete Account</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="fa-solid fa-bell"></i> Notification Preferences</div></div>
+            <div class="card-body" style="display:flex;flex-direction:column;gap:10px;">
+              <div class="set-item">
+                <div class="set-left"><div class="set-icon sic-gold"><i class="fa-solid fa-coins"></i></div><div><div class="set-title">Reward Notifications</div><div class="set-desc">Notify when rewards are credited</div></div></div>
+                <label class="toggle"><input type="checkbox" checked /><span class="toggle-sl"></span></label>
+              </div>
+              <div class="set-item">
+                <div class="set-left"><div class="set-icon sic-g"><i class="fa-solid fa-building-columns"></i></div><div><div class="set-title">Withdrawal Updates</div><div class="set-desc">Notify when withdrawals are approved</div></div></div>
+                <label class="toggle"><input type="checkbox" checked /><span class="toggle-sl"></span></label>
+              </div>
+              <div class="set-item">
+                <div class="set-left"><div class="set-icon sic-b"><i class="fa-solid fa-calendar"></i></div><div><div class="set-title">Visit Reminders</div><div class="set-desc">Remind me of upcoming bookings</div></div></div>
+                <label class="toggle"><input type="checkbox" checked /><span class="toggle-sl"></span></label>
+              </div>
+              <div class="set-item">
+                <div class="set-left"><div class="set-icon sic-gray"><i class="fa-solid fa-book-open"></i></div><div><div class="set-title">Education Updates</div><div class="set-desc">Notify when new content is available</div></div></div>
+                <label class="toggle"><input type="checkbox" /><span class="toggle-sl"></span></label>
+              </div>
+              <div class="set-item">
+                <div class="set-left"><div class="set-icon sic-gold"><i class="fa-solid fa-trophy"></i></div><div><div class="set-title">Leaderboard Updates</div><div class="set-desc">Notify when my rank changes</div></div></div>
+                <label class="toggle"><input type="checkbox" checked /><span class="toggle-sl"></span></label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /.dbc -->
+
+    <!-- Footer -->
+    <footer class="db-foot">
+      <div class="db-foot-copy">&copy; 2026 Ecoleey Nigeria Ltd. All rights reserved.</div>
+      <div class="db-foot-links">
+        <a href="../about.html">About</a>
+        <a href="../education.html">Education</a>
+        <a href="../index.html#footer-contact">Contact</a>
+      </div>
+      <div class="db-foot-social">
+        <a href="https://www.instagram.com/spamms_for_kee?igsh=MXdqN2o4MHM1djkzdg%3D%3D&utm_source=qr" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://snapchat.com/t/2vinEvDm" aria-label="Snapchat"><i class="fa-brands fa-snapchat"></i></a>
+        <a href="wa.me/2349038310091" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
+    </footer>
+
+  </div><!-- /.dbmain -->
+</div><!-- /.dbl -->
+
+<script src="../java/dashboard.js"></script>
+</body>
+</html>

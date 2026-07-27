@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login/register</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/stylesss.css" />
+</head>
+<body class="auth-page">
+
+  <!-- ── LEFT PANEL ── -->
+  <div class="auth-left">
+    <div class="auth-deco auth-deco-1"></div>
+    <div class="auth-deco auth-deco-2"></div>
+
+    <div class="auth-left-inner">
+
+      <!-- Brand -->
+      <div class="auth-brand">
+        <div class="auth-brand-icon"><i class="fa-solid fa-recycle"></i></div>
+        <span class="auth-brand-name">Eco<span>Leey</span></span>
+      </div>
+
+      <!-- Welcome heading -->
+      <h1 class="auth-welcome">
+        Recycle Bottles.<br>
+        Earn <span class="accent">Real Rewards.</span><br>
+        Save the Planet.
+      </h1>
+
+      <p class="auth-tagline">
+        Join over 48,000 Nigerians who are turning everyday recycling into digital rewards — redeemable directly to their bank accounts.
+      </p>
+
+      <!-- Feature highlights -->
+      <div class="auth-features">
+        <div class="auth-feature">
+          <div class="auth-feature-icon"><i class="fa-solid fa-coins"></i></div>
+          <div class="auth-feature-text">
+            <strong>Earn Rewards</strong>
+            Get EcoPoints for every bottle you deposit into an RVM.
+          </div>
+        </div>
+        <div class="auth-feature">
+          <div class="auth-feature-icon"><i class="fa-solid fa-chart-line"></i></div>
+          <div class="auth-feature-text">
+            <strong>Track Your History</strong>
+            Monitor every deposit and your growing environmental impact.
+          </div>
+        </div>
+        <div class="auth-feature">
+          <div class="auth-feature-icon"><i class="fa-solid fa-building-columns"></i></div>
+          <div class="auth-feature-text">
+            <strong>Redeem to Bank</strong>
+            Withdraw your wallet balance directly to any Nigerian bank.
+          </div>
+        </div>
+        <div class="auth-feature">
+          <div class="auth-feature-icon"><i class="fa-solid fa-leaf"></i></div>
+          <div class="auth-feature-text">
+            <strong>Protect the Environment</strong>
+            Every item you recycle helps reduce plastic pollution in Nigeria.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── RIGHT PANEL ── -->
+  <div class="auth-right">
+    <div class="auth-card">
+
+      <!-- Header -->
+      <div class="auth-card-header">
+        <div class="auth-card-title" id="auth-title">Create Your Account</div>
+        <div class="auth-card-sub" id="auth-sub">Start recycling and earning rewards today.</div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-register" onclick="showRegister()">Register</button>
+        <button class="auth-tab" id="tab-login" onclick="showLogin()">Login</button>
+      </div>
+
+      <!-- ── REGISTRATION FORM ── -->
+      <form class="auth-form active" id="form-register" novalidate>
+
+        <div class="input-group">
+          <label for="reg-name">Full Name</label>
+          <div class="input-wrap">
+            <i class="fa-solid fa-user"></i>
+            <input type="text" id="reg-name" placeholder="e.g. ngozi nwankwo" autocomplete="name" />
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="reg-email">Email Address</label>
+          <div class="input-wrap">
+            <i class="fa-solid fa-envelope"></i>
+            <input type="email" id="reg-email" placeholder="you@example.com" autocomplete="email" />
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="reg-phone">Phone Number</label>
+          <div class="input-wrap">
+            <i class="fa-solid fa-phone"></i>
+            <input type="tel" id="reg-phone" placeholder="+234 800 000 0000" autocomplete="tel" />
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="reg-password">Password</label>
+          <div class="input-wrap">
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" id="reg-password" placeholder="Create a strong password" class="has-toggle" autocomplete="new-password" />
+            <i class="fa-solid fa-eye toggle-pw" id="toggle-reg-pw" onclick="togglePassword('reg-password', 'toggle-reg-pw')"></i>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="reg-confirm">Confirm Password</label>
+          <div class="input-wrap">
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" id="reg-confirm" placeholder="Repeat your password" class="has-toggle" autocomplete="new-password" />
+            <i class="fa-solid fa-eye toggle-pw" id="toggle-reg-cf" onclick="togglePassword('reg-confirm', 'toggle-reg-cf')"></i>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-auth">
+          <i class="fa-solid fa-rocket"></i> Create Account
+        </button>
+
+        <p class="auth-terms">
+          By registering you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+        </p>
+
+        <p class="auth-switch">
+          Already have an account? <a href="#" onclick="showLogin(); return false;">Login here</a>
+        </p>
+
+      </form>
+
+      <!-- ── LOGIN FORM ── -->
+      <form class="auth-form" id="form-login" novalidate>
+
+        <div class="input-group">
+          <label for="login-email">Email Address</label>
+          <div class="input-wrap">
+            <i class="fa-solid fa-envelope"></i>
+            <input type="email" id="login-email" placeholder="you@example.com" autocomplete="email" />
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="login-password">Password</label>
+          <div class="input-wrap">
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" id="login-password" placeholder="Enter your password" class="has-toggle" autocomplete="current-password" />
+            <i class="fa-solid fa-eye toggle-pw" id="toggle-login-pw" onclick="togglePassword('login-password', 'toggle-login-pw')"></i>
+          </div>
+        </div>
+
+        <div class="forgot-link">
+          <a href="#">Forgot Password?</a>
+        </div>
+
+        <button type="submit" class="btn-auth">
+          <i class="fa-solid fa-right-to-bracket"></i> Login to Account
+        </button>
+
+        <p class="auth-switch">
+          Don't have an account? <a href="#" onclick="showRegister(); return false;">Register here</a>
+        </p>
+
+      </form>
+
+    </div>
+  </div>
+
+  <script src="java/script.js"></script>
+</body>
+</html>
